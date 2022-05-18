@@ -1,0 +1,61 @@
+﻿@page
+@model TestePraticoQualyTeam.Pages.Documentos.EditModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>Documento</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Documento.id" />
+            <div class="form-group">
+                <label asp-for="Documento.titulo" class="control-label"></label>
+                <input asp-for="Documento.titulo" class="form-control" />
+                <span asp-validation-for="Documento.titulo" class="text-danger"></span>
+
+
+            </div>
+            <div class="form-group">
+                <label asp-for="Documento.codigo" class="control-label"></label>
+                <input type="hidden" asp-for="Documento.codigo" />
+                
+                <div> @Html.DisplayFor(model => model.Documento.codigo) </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="Documento.categoria" class="control-label"></label>
+                <input asp-for="Documento.categoria" class="form-control" />
+                <span asp-validation-for="Documento.categoria" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Documento.processo" class="control-label"></label>
+                <select asp-for="Documento.processoID" class="form-control" asp-items="@Model.processosNomes">
+                </select>
+                <span asp-validation-for="Documento.processoID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="upload.FormFile" class="control-label"></label>
+                <input asp-for="upload.FormFile" type="file" class=" form-control-file" />
+                <input type="hidden" asp-for="Documento.arquivo" />
+                <input type="hidden" asp-for="Documento.nomeArquivo" />
+                <span asp-validation-for="upload.FormFile" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="./Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

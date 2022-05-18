@@ -1,0 +1,85 @@
+﻿@page
+@model TestePraticoQualyTeam.Pages.Documentos.IndexModel
+
+@{
+    ViewData["Title"] = "Documento";
+}
+
+<h1>Lista Documentos</h1>
+
+<p>
+    <a asp-page="Create">Cadastrar</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+
+                <a asp-page="./Index" asp-route-sortOrder="@Model.TituloSort">
+                    @Html.DisplayNameFor(model => model.Documento[0].titulo)
+                </a>
+
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Documento[0].codigo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Documento[0].categoria)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Documento[0].processo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Documento[0].nomeArquivo)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Documento)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.titulo)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.codigo)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.categoria)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.processo.nome)
+                </td>
+                <td>
+                    <a asp-page-handler="DownloadDb" asp-route-id="@item.id"> @Html.DisplayFor(modelItem => item.nomeArquivo)</a>
+
+                </td>
+
+                <td>
+                    <a asp-page="./Edit" asp-route-id="@item.id">Editar</a> |
+                    <!-- <a asp-page="./Details" asp-route-id="@item.id">Details</a> |-->
+                    <a asp-page="./Delete" asp-route-id="@item.id">Deletar</a>
+
+                </td>
+
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section Scripts {
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="sweetalert2.min.js"></script>
+    <link rel="stylesheet" href="sweetalert2.min.css">
+
+    @if (TempData["Message"] != null)
+    {
+        <script type="text/javascript">
+                            window.onload = function () {
+                                Swal.fire({ title: '@TempData["Message"]', icon : "success"});
+                            };
+        </script>
+    }
+
+}

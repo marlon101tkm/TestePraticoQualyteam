@@ -1,0 +1,60 @@
+﻿@page
+@model TestePraticoQualyTeam.Pages.Documentos.CreateModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Cadastrar</h1>
+
+<h4>Documento</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Documento.titulo" class="control-label"></label>
+                <input asp-for="Documento.titulo" class="form-control" />
+                <span asp-validation-for="Documento.titulo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Documento.codigo" class="control-label"></label>
+                <input asp-for="Documento.codigo" class="form-control" />
+                <span asp-validation-for="Documento.codigo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Documento.categoria" class="control-label"></label>
+                <input asp-for="Documento.categoria" class="form-control" />
+                <span asp-validation-for="Documento.categoria" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Documento.processo" class="control-label"></label>
+                <select asp-for="Documento.processoID" class="form-control" asp-items="@Model.processosNomes">
+                    <option value="">-- Selecione o Processo --</option>
+                </select>
+                <span asp-validation-for="Documento.processoID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="upload.FormFile" class="control-label"></label>
+                <input asp-for="upload.FormFile" type="file" class=" form-control-file" />
+                <span asp-validation-for="upload.FormFile" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+
+                <input type="submit" value="Cadastrar" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<div>
+    <a asp-page="Index">Voltar a Lista</a>
+</div>
+
+@section Scripts {
+
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+}
