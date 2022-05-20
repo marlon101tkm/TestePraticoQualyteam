@@ -17,7 +17,9 @@ namespace TestePraticoQualyTeam.Data
        public DbSet<TestePraticoQualyTeam.Model.Documento> Documentos { get; set; }
 
        public DbSet<TestePraticoQualyTeam.Model.Processo> Processos { get; set; }
-      
+
+        public DbSet<TestePraticoQualyTeam.Model.Categoria> Categorias { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             
@@ -29,8 +31,12 @@ namespace TestePraticoQualyTeam.Data
             });
                
 
-            modelBuilder.Entity<Processo>().ToTable("Processo");
-            
+            modelBuilder.Entity<Processo>().ToTable("Processo").HasMany<Categoria>(d => d.categorias);
+
+            modelBuilder.Entity<Categoria>().ToTable("Categoria");
+
+
+
         }
       
 

@@ -13,6 +13,10 @@ namespace TestePraticoQualyTeam.Pages.Documentos
     public class ProcessosPageModelModel : PageModel
     {
         public SelectList processosNomes { get; set; }
+
+        public SelectList categoriasNomes { get; set; }
+
+
         public void popularDropdownProcessos(TestePraticoQualyTeamContext  _context, object processoSelecionado = null)
         {
             var processosQuery = from d in _context.Processos
@@ -20,5 +24,16 @@ namespace TestePraticoQualyTeam.Pages.Documentos
                                  select d;
             processosNomes = new SelectList(processosQuery.AsNoTracking(), "id", "nome", processoSelecionado);
         }
+
+        public void popularDropdownCategorias(TestePraticoQualyTeamContext _context, object categoriaSelecionada = null)
+        {
+            var categoriasQuery = from d in _context.Categorias
+                                 orderby d.nome
+                                 select d;
+            processosNomes = new SelectList(categoriasQuery.AsNoTracking(), "id", "nome", categoriaSelecionada);
+        }
+
+
+
     }
 }

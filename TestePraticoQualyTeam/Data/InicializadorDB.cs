@@ -10,14 +10,30 @@ namespace TestePraticoQualyTeam.Data
     {
         public static void Initialize(TestePraticoQualyTeamContext contex)
         {
+
+            var categoria = new Categoria[]
+                           {
+                new Categoria {nome = "Categoria 1" },
+                new Categoria {nome = "Categoria 2" },
+                new Categoria {nome = "Categoria 3" },
+                new Categoria {nome = "Categoria 4" },
+                new Categoria {nome = "Categoria 5" },
+                new Categoria {nome = "Categoria 6" }
+
+                           };
+
+            if (!contex.Categorias.Any())
+            {
+
+                contex.Categorias.AddRange(categoria);
+                contex.SaveChanges();
+            }
             var processos = new Processo[]
                            {
-                new Processo {nome = "Proceso 1" },
-                new Processo {nome = "Processo 2" },
-                new Processo {nome = "Processo 3" },
-                new Processo {nome = "Processo 4" },
-                new Processo {nome = "Processo 5" },
-                new Processo {nome = "Processo 6" }
+                new Processo {nome = "Proceso 1" , categorias = new List<Categoria>() {categoria[0],categoria[1]} },
+                new Processo {nome = "Processo 2",categorias = new List<Categoria>() {categoria[2],categoria[3]}},
+                new Processo {nome = "Processo 3",categorias = new List<Categoria>() {categoria[4],categoria[1]} },
+              
 
                            };
 
@@ -27,7 +43,9 @@ namespace TestePraticoQualyTeam.Data
                 contex.Processos.AddRange(processos);
                 contex.SaveChanges();
             }
-           
+
+            
+
 
         }
     }

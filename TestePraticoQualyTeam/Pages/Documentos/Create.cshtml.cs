@@ -92,8 +92,20 @@ namespace TestePraticoQualyTeam.Pages.Documentos
             return Page();
        
         }
-     
-   
+
+
+        [HttpGet]
+        public virtual JsonResult CidadesPorDepartamento(int id)
+        {
+            var xpto = _context.ListAllCities()
+                            .Where(x => x.State.Id == codCitySel)
+                            .OrderBy(x => x.Name)
+                            .Select(x => new { CityId = x.Id, Name = x.Name })
+                            .ToList(); //.ToSelectList(x => x.Id, x => x.Name);
+
+            return Json(xpto, JsonRequestBehavior.AllowGet);
+        }
+
 
     }
 
