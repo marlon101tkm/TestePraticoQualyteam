@@ -9,7 +9,7 @@ using TestePraticoQualyTeam.Data;
 namespace TestePraticoQualyTeam.Migrations
 {
     [DbContext(typeof(TestePraticoQualyTeamContext))]
-    [Migration("20220518155730_InitialCreate")]
+    [Migration("20220520235248_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -18,6 +18,35 @@ namespace TestePraticoQualyTeam.Migrations
             modelBuilder
                 .HasAnnotation("Relational:MaxIdentifierLength", 64)
                 .HasAnnotation("ProductVersion", "5.0.16");
+
+            modelBuilder.Entity("CategoriaProcesso", b =>
+                {
+                    b.Property<int>("categoriasid")
+                        .HasColumnType("int");
+
+                    b.Property<int>("processosid")
+                        .HasColumnType("int");
+
+                    b.HasKey("categoriasid", "processosid");
+
+                    b.HasIndex("processosid");
+
+                    b.ToTable("ProcessosCategorias");
+                });
+
+            modelBuilder.Entity("TestePraticoQualyTeam.Model.Categoria", b =>
+                {
+                    b.Property<int>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<string>("nome")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.HasKey("id");
+
+                    b.ToTable("Categoria");
+                });
 
             modelBuilder.Entity("TestePraticoQualyTeam.Model.Documento", b =>
                 {
@@ -28,9 +57,8 @@ namespace TestePraticoQualyTeam.Migrations
                     b.Property<byte[]>("arquivo")
                         .HasColumnType("longblob");
 
-                    b.Property<string>("categoria")
-                        .IsRequired()
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+                    b.Property<int>("categoriaID")
+                        .HasColumnType("int");
 
                     b.Property<int>("codigo")
                         .HasColumnType("int");
@@ -46,6 +74,8 @@ namespace TestePraticoQualyTeam.Migrations
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.HasKey("id");
+
+                    b.HasIndex("categoriaID");
 
                     b.HasIndex("codigo")
                         .IsUnique();
@@ -69,13 +99,36 @@ namespace TestePraticoQualyTeam.Migrations
                     b.ToTable("Processo");
                 });
 
+            modelBuilder.Entity("CategoriaProcesso", b =>
+                {
+                    b.HasOne("TestePraticoQualyTeam.Model.Categoria", null)
+                        .WithMany()
+                        .HasForeignKey("categoriasid")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("TestePraticoQualyTeam.Model.Processo", null)
+                        .WithMany()
+                        .HasForeignKey("processosid")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("TestePraticoQualyTeam.Model.Documento", b =>
                 {
+                    b.HasOne("TestePraticoQualyTeam.Model.Categoria", "categoria")
+                        .WithMany()
+                        .HasForeignKey("categoriaID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("TestePraticoQualyTeam.Model.Processo", "processo")
                         .WithMany()
                         .HasForeignKey("processoID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("categoria");
 
                     b.Navigation("processo");
                 });

@@ -28,12 +28,11 @@ namespace TestePraticoQualyTeam.Model
 
 
 
-        [Required (ErrorMessage = "Necessario Informar a Categoria", AllowEmptyStrings = false) ]
+        [Required (ErrorMessage = "Necessario Informar a Categoria") ]
         [ForeignKey("Categoria")]
-        public string categoriaID { get; set; }
-
+        public int categoriaID { get; set; }
         [Display(Name ="Categoria")]
-        public string categoria { get; set; }
+        public Categoria categoria { get; set; }
 
        
 

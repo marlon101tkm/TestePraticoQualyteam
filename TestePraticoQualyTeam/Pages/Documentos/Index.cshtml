@@ -46,7 +46,7 @@
                     @Html.DisplayFor(modelItem => item.codigo)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.categoria)
+                    @Html.DisplayFor(modelItem => item.categoria.nome)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.processo.nome)
@@ -58,7 +58,7 @@
 
                 <td>
                     <a asp-page="./Edit" asp-route-id="@item.id">Editar</a> |
-                    <!-- <a asp-page="./Details" asp-route-id="@item.id">Details</a> |-->
+                    
                     <a asp-page="./Delete" asp-route-id="@item.id">Deletar</a>
 
                 </td>
@@ -70,8 +70,7 @@
 
 @section Scripts {
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="sweetalert2.min.js"></script>
-    <link rel="stylesheet" href="sweetalert2.min.css">
+ 
 
     @if (TempData["Message"] != null)
     {

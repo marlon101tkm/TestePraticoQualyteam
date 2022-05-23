@@ -20,6 +20,8 @@ namespace TestePraticoQualyTeam.Data
 
         public DbSet<TestePraticoQualyTeam.Model.Categoria> Categorias { get; set; }
 
+        
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             
@@ -27,18 +29,28 @@ namespace TestePraticoQualyTeam.Data
             modelBuilder.Entity<Documento>(entity =>
             {
                 entity.HasIndex(c => c.codigo).IsUnique();
-                entity.ToTable("Documento").HasOne(d => d.processo);
+                entity.HasOne(d => d.processo);
+                entity.HasOne(d => d.categoria);
+                entity.ToTable("Documento");
+                ;
+                
             });
                
 
-            modelBuilder.Entity<Processo>().ToTable("Processo").HasMany<Categoria>(d => d.categorias);
+            modelBuilder.Entity<Processo>().ToTable("Processo")
+                .HasMany<Categoria>(d => d.categorias)
+                .WithMany(d => d.processos)
+                .UsingEntity(j => j.ToTable("ProcessosCategorias")); ;
+                    
 
             modelBuilder.Entity<Categoria>().ToTable("Categoria");
 
 
 
         }
-      
+
+     
+
 
     }
 }

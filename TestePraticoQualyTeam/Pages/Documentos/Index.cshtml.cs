@@ -48,7 +48,7 @@ namespace TestePraticoQualyTeam.Pages.Documentos
                     break;
             }
 
-            Documento = await documentoIQ.Include(c => c.processo).AsNoTracking().ToListAsync();
+            Documento = await documentoIQ.Include(p => p.processo).Include(c=>c.categoria).AsNoTracking().ToListAsync();
 
         }
         

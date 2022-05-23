@@ -12,7 +12,8 @@ namespace TestePraticoQualyTeam.Model
         public int id { get; set; }
 
         public string nome { get; set; }
-       
+
+        public ICollection<Processo> processos { get; set; }
 
     }
 }

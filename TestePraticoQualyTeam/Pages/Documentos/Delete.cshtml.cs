@@ -35,7 +35,8 @@ namespace TestePraticoQualyTeam.Pages.Documentos
                 return NotFound();
             }
 
-            Documento = await _context.Documentos.AsNoTracking().FirstOrDefaultAsync(m => m.id == id);
+            Documento = await _context.Documentos.Include(p => p.processo).Include(c => c.categoria).AsNoTracking().FirstOrDefaultAsync(m => m.id == id);
+
 
             if (Documento == null)
             {

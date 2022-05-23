@@ -25,18 +25,17 @@
             </div>
             <div class="form-group">
                 <label asp-for="Documento.processo" class="control-label"></label>
-                <select id="DropdonwProcesso " asp-for="Documento.processoID" class="form-control" asp-items="@Model.processosNomes">
+                <select id="processoDropDown" asp-for="Documento.processoID" class="form-control" asp-items="@Model.processosNomes">
                     <option value="">-- Selecione o Processo --</option>
                 </select>
                 <span asp-validation-for="Documento.processoID" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Documento.categoria" class="control-label"></label>
-                <input asp-for="Documento.categoria" class="form-control" />
-                <select id=" DropDonwCategoria "  asp-for="Documento.categoriaID" class="form-control" asp-items="@Model.categoriasNomes">
-                    <option value="">-- Selecione o Processo --</option>
+                <select id="categoriaDropDown" asp-for="Documento.categoriaID" class="form-control">
+                   
                 </select>
-                <span asp-validation-for="Documento.categoria" class="text-danger"></span>
+                <span asp-validation-for="Documento.categoriaID" class="text-danger"></span>
             </div>
 
             <div class="form-group">
@@ -60,20 +59,27 @@
 @section Scripts {
 
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
-    <script>
-        $("#DropdonwProcesso").change(function () {
-            $.ajax({
-                url: "./Pages/Documentos/ProcessosPageModel/",
-                success: function (data) {
-                    $("#DropDonwCategoria").empty();
-                    $("#DropDonwCategoria").append('<option value>Selecione...</option>');
-                    $.each(data, function (index, element) {
-                        $("#DropDonwCategoria").append('<option value="' + element.id + '">' + element.nome + '</option>');
+    <script >
+
+        document.getElementById('processoDropDown').addEventListener('change', (e) => {
+            /*document.getElementById('categoriaDropDown').innerHTML = "<option value=''>Select SubCategory</option>";*/
+            fetch(`?handler=PopularDropdownCategorias&idProcesso=${e.target.value}`)
+                .then((response) => {
+                    
+                    return response.json();
+                })
+                .then((data) => {
+                    document.getElementById('categoriaDropDown').innerHTML = "<option value=''>Selecione a Categoria</option>";
+                    Array.prototype.forEach.call(data, function (item, i) {
+                        document.getElementById('categoriaDropDown').innerHTML += `<option value="${item.id}">${item.nome}</option>`
+                       // document.getElementById('categoriaDropDown').innerHTML += item.nome
                     });
-                }
-            });
+                });
         });
+            
     </script>
 
 }
